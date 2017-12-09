@@ -1,0 +1,103 @@
+# LeZi-Update predictor
+
+type LeZiUpdate{T} <: BasePredictor{T}
+    dictionary::Vector{Vector{T}}
+    model::Trie{T,Int64}
+    phrase::Vector{T}
+    context::Vector{T}
+
+    LeZiUpdate{T}() where {T} = new( Vector{Vector{}}(), Trie{T,Int64}(), Vector{T}(), Vector{T}() )
+    # (::Type{LeZiUpdate{T}}){T}() = new{T}( Vector{Vector{}}(), Trie{T,Int64}(), Vector{T}(), Vector{T}() );
+end
+
+function add{T}( p::LeZiUpdate{T}, sym::T )
+    p.model.value += 1;   # Update number of symbols seen by model
+
+    push!( p.phrase, sym );
+    if p.phrase ∉ p.dictionary
+        push!( p.dictionary, p.phrase );
+
+        suffix = p.phrase[1:end];
+        while !isempty( suffix )
+            prefix  = suffix[1:end];
+            while !isempty( prefix )
+                if haskey( p.model, prefix )
+                    p.model[prefix] += 1;
+                else
+                    p.model[prefix] = 1;
+                end
+                shift!( prefix );
+            end
+            pop!( suffix );
+        end
+        p.context   = p.phrase[2:end];
+        p.phrase    = Vector{T}();
+    else
+        p.context   = p.phrase[1:end];
+    end
+end
+
+function predict{T}( p::LeZiUpdate{T} )
+    # Create a dictionary with symbols
+    symbols = Dict( k => (p.model[[k]]/p.model.value) for k ∈ keys(children(p.model,Vector{T}())) );
+
+    buffer  = Vector{T}();
+    for i = length(p.context):-1:1
+        unshift!( buffer, p.context[i] );
+        # println( "    Buffer: ", buffer );
+        list_of_children    = children( p.model, buffer );
+        # Get sum of all children values
+        s   = isempty(list_of_children)?
+                0:
+                mapreduce( k->list_of_children[k].value, +, keys(list_of_children) );
+        # Apply escape probability
+        esc_prob = (p.model[buffer]-s)/p.model[buffer];
+        for symbol in keys(symbols)
+            symbols[symbol] *= esc_prob;
+        end
+        # Get each child probability
+        for k ∈ keys(list_of_children)
+            # println( "        ", k, " -> ", list_of_children[k].value )
+            symbols[k] += list_of_children[k].value/p.model[buffer];
+        end
+    end
+
+    return symbols;
+end
+
+function info_string{T}( p::LeZiUpdate{T} )
+    return @sprintf( "LeZiUpdate" );
+end
+
+function unique_string{T}( p::LeZiUpdate{T} )
+    return @sprintf( "LZUP" );
+end
+
+
+"""
+seq: a|aa|b|ab|bb|bba|abc|c|d|dc|ba|aaa
+
+dic{}, phrase[]
+
+a :>
+    dic{a}, phrase[]
+    model{a:1}
+a :>
+    dic{a}, phrase[a]
+    model{a:1}
+a :>
+    dic{a,aa}, phrase[]
+    model{a:3,aa:1}
+b :>
+    dic{a,aa,b}, phrase[]
+    model{a:3,aa:1,b:1}
+a :>
+    dic{a,aa,b}, phrase[a]
+    model{a:3,aa:1,b:1}
+b :>
+    dic{a,aa,b,ab}, phrase[]
+    model{a:4,aa:1,ab:1,b:2}
+b :>
+    dic{a,aa,b,ab}, phrase[b]
+    model{a:4,aa:1,ab:1,b:2}
+"""
