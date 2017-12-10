@@ -6,7 +6,7 @@
 Creates a Discounted HEDGE Predictor for `SymbolType` with context length `c`, learning
 parameter ``β`` and discounting parameter ``γ``.
 
-# Examples
+## Examples
 ```julia-repl
 julia> p = dHedgePPM{Char}( 4 )
 DiscretePredictors.dHedgePPM{Char}([*] (0)

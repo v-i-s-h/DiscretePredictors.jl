@@ -5,7 +5,7 @@
 
 Creates an Error Weighted PPM predictor with context length `c` and weighing paramter `ϵ`.
 
-# Examples
+## Examples
 ```julia-repl
 julia> p = ewPPM{Int64}(3)
 DiscretePredictors.ewPPM{Int64}([*] (0)

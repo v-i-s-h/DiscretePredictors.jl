@@ -6,7 +6,7 @@
 Creates a K-th Order Markov Model predictor with a context depth of `context_length` for 
 `SymbolType`. `SymbolType` can be any valid type including `Char`, `Int64` etc.,
 
-# Examples
+## Examples
 ```julia-repl
 julia> p = KOM{Char}(3)
 DiscretePredictors.KOM{Char}([*] (0)

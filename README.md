@@ -2,12 +2,14 @@
 
 #### Created by Vishnu Raj (@v-i-s-h)
 
-DiscretePredictors is a collection of algorithms for discrete sequence prediction. It provides a common API to various discrete sequence prediction algorithms. My goals with the package are:
+DiscretePredictors is a collection of algorithms for online discrete sequence prediction. 
+It provides a common API to various discrete sequence prediction algorithms. My goals with 
+the package are:
 - **Simple Interface**
 - **Easily Extendable**
 - **Reproducible Research**
 
-API Overview:
+### API Overview:
 - `p = Predictor{SymbolType}(parameters...)` creates a predictor instance `p` with 
     prediction algorithm `Predictor` (see choices below) of symbols of `SymbolType` with 
     specified the `parameters`
@@ -20,7 +22,7 @@ API Overview:
     under current context
 - `size( p )` returns the number of nodes in current prediction model `p.model`
 
-Available Predictors:
+### Available Predictors:
 - Adaptive MPP (`AdaptiveMPP`)
 - Active LeZi (`ALZ`)
 - Dependency Graph (`DG`)

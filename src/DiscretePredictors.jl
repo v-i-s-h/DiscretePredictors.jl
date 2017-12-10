@@ -60,7 +60,7 @@ Available Predictors:
 - LeZi-Update (`LeZiUpdate`)
 - LeZi78 (`LeZi78`)
 
-# Example
+## Example
 ```julia
 # Initialize a predictor
 julia> p = KOM{Char}(4)

@@ -6,7 +6,7 @@
 Creates a Dependency Graph predictor for `SymbolType` with lookahead window of `win_length`.
 `SymbolType` can be any valid type including `Char`, `Int64` etc.,
     
-# Examples
+## Examples
 ```julia-repl
 jjulia> p = DG{Char}( 4 )
 DiscretePredictors.DG{Char}([*] (0)

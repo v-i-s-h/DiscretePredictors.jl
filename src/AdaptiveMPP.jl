@@ -6,7 +6,7 @@ Creates an Adaptive MPP predictor with a context depth of `context_length` and m
 ``α`` for `SymbolType`. Default value of mixing parameter ``α = 0.10``. `SymbolType` can be 
 any valid type including `Char`, `Int64` etc.,
 
-# Examples
+## Examples
 ```julia-repl
 julia> p = AdaptiveMPP{Char}(4)
 DiscretePredictors.adaptiveMPP{Char}([*] (0)

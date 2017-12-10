@@ -6,7 +6,7 @@
 Creates a LeZiUpdate predictor for `SymbolType`. `SymbolType` can be any valid type including
 `Char`, `Int64` etc.,
 
-# Examples
+## Examples
 ```julia-repl
 julia> p = LeZiUpdate{Char}()
 DiscretePredictors.LeZiUpdate{Char}(Array{Char,1}[], [*] (0)

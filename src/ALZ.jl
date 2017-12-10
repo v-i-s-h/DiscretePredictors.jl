@@ -5,7 +5,7 @@
 Creates an Active LeZi predictor for `SymbolType`. `SymbolType` can be any valid type including
 `Char`, `Int64` etc.,
         
-# Examples
+## Examples
 ```julia-repl
 julia> p = ALZ{Char}()
 DiscretePredictors.ALZ{Char}(Array{Char,1}[], [*] (0)

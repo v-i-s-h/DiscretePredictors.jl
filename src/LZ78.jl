@@ -6,7 +6,7 @@
 Creates a LZ78 predictor for `SymbolType`. `SymbolType` can be any valid type including
 `Char`, `Int64` etc.,
 
-# Examples
+## Examples
 ```julia-repl
 julia> p = LZ78{Int64}()
 DiscretePredictors.LZ78{Int64}([*] (0)
