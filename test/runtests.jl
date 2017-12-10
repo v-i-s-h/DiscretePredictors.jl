@@ -19,7 +19,7 @@ macro test_nothrow(ex)
 end
 
 tests = [
-            "adaptiveMPP",
+            "AdaptiveMPP",
             "ALZ",
             "DG",
             "dHedgePPM",

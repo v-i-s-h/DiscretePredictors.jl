@@ -1,5 +1,25 @@
 # Error weighted PPM
 
+"""
+    ewPPM{Char}( c::Int [,ϵ::Float64 = 1.0] )
+
+Creates an Error Weighted PPM predictor with context length `c` and weighing paramter `ϵ`.
+
+# Examples
+```julia-repl
+julia> p = ewPPM{Int64}(3)
+DiscretePredictors.ewPPM{Int64}([*] (0)
+, Int64[], 3, 1.0, [1.0, 1.0, 1.0, 1.0], Dict{Int64,Float64}[Dict{Int64,Float64}(), Dict{Int64,Float64}(), Dict{Int64,Float64}(), Dict{Int64,Float64}()])
+
+julia> p = ewPPM{Int64}(3, 0.95)
+DiscretePredictors.ewPPM{Int64}([*] (0)
+, Int64[], 3, 0.95, [1.0, 1.0, 1.0, 1.0], Dict{Int64,Float64}[Dict{Int64,Float64}(), Dict{Int64,Float64}(), Dict{Int64,Float64}(), Dict{Int64,Float64}()])
+```
+
+Reference:
+Pulliyakode, Saishankar Katri, and Sheetal Kalyani. "A modified ppm algorithm for online sequence prediction using short data records." IEEE Communications Letters 19.3 (2015): 423-426.
+"""
+
 type ewPPM{T} <: BasePredictor{T}
     model::Trie{T,Int64}
     context::Vector{T}
@@ -37,6 +57,8 @@ function add!{T}( p::ewPPM{T}, sym::T )
     if length(p.context) > p.cxt_length
         shift!( p.context )
     end
+
+    nothing
 end
 
 

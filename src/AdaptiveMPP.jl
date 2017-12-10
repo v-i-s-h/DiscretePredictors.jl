@@ -1,7 +1,27 @@
-# Adaptive MPP: Based on
-#   Vladimir, V. V. (2017). Online Aggregation of Unbounded Signed Losses Using Shifting Experts. In A. Gammerman, V. Vovk, Z. Luo, & H. Papadopoulos (Eds.), Proceedings of the Sixth Workshop on Conformal and Probabilistic Prediction and Applications (pp. 3–17). Stockholm, Sweden: PMLR. Retrieved from http://proceedings.mlr.press/v60/v-yugin17a.html
+# Adaptive MPP: 
+"""
+    AdaptiveMPP{SymbolType}(context_length::Int64 [,α::Float64 ])
 
-type adaptiveMPP{T} <: BasePredictor{T}
+Creates an Adaptive MPP predictor with a context depth of `context_length` and mixing coefficient
+``α`` for `SymbolType`. Default value of mixing parameter ``α = 0.10``. `SymbolType` can be 
+any valid type including `Char`, `Int64` etc.,
+
+# Examples
+```julia-repl
+julia> p = AdaptiveMPP{Char}(4)
+DiscretePredictors.adaptiveMPP{Char}([*] (0)
+, Char[], 4, 0.1, Inf, 0.0, [0.2, 0.2, 0.2, 0.2, 0.2], Dict{Char,Float64}[Dict{Char,Float64}(), Dict{Char,Float64}(), Dict{Char,Float64}(), Dict{Char,Float64}(), Dict{Char,Float64}()])
+
+julia> p = AdaptiveMPP{Char}(4,0.13)
+DiscretePredictors.adaptiveMPP{Char}([*] (0)
+, Char[], 4, 0.13, Inf, 0.0, [0.2, 0.2, 0.2, 0.2, 0.2], Dict{Char,Float64}[Dict{Char,Float64}(), Dict{Char,Float64}(), Dict{Char,Float64}(), Dict{Char,Float64}(), Dict{Char,Float64}()])
+```
+
+Reference:
+V’yugin, Vladimir V. "Online Aggregation of Unbounded Signed Losses Using Shifting Experts." Conformal and Probabilistic Prediction and Applications. 2017.
+"""
+
+type AdaptiveMPP{T} <: BasePredictor{T}
     model::Trie{T,Int64}
     context::Vector{T}
     cxt_length::Int64
@@ -11,12 +31,12 @@ type adaptiveMPP{T} <: BasePredictor{T}
     weights::Vector{Float64}
     last_prediction::Vector{Dict{T,Float64}}
 
-    adaptiveMPP{T}( _c::Int, _α = 0.10 ) where {T} = new( Trie{T,Int64}(), Vector{T}(),
+    AdaptiveMPP{T}( _c::Int, _α = 0.10 ) where {T} = new( Trie{T,Int64}(), Vector{T}(),
                                                 _c, _α, +Inf, 0.00,
                                                 1/(1+_c)*ones(Float64,_c+1), fill(Dict{T,Float64}(),_c+1) );
 end
 
-function add!{T}( p::adaptiveMPP{T}, sym::T )
+function add!{T}( p::AdaptiveMPP{T}, sym::T )
     p.model.value += 1;
 
     # Calculate expert loss
@@ -54,10 +74,12 @@ function add!{T}( p::adaptiveMPP{T}, sym::T )
     if length(p.context) > p.cxt_length
         shift!( p.context )
     end
+
+    nothing
 end
 
 
-function predict{T}( p::adaptiveMPP{T} )
+function predict{T}( p::AdaptiveMPP{T} )
     # Clear away last predictions
     p.last_prediction   = fill(Dict{T,Float64}(),p.cxt_length+1);
 
@@ -99,15 +121,15 @@ function predict{T}( p::adaptiveMPP{T} )
     return symbols;
 end
 
-function info_string{T}( p::adaptiveMPP{T} )
+function info_string{T}( p::AdaptiveMPP{T} )
     return @sprintf( "Adaptive MPP(%d,\$\\alpha_t=%3.2f\$)", p.cxt_length,p.α );
 end
 
-function unique_string{T}( p::adaptiveMPP{T} )
+function unique_string{T}( p::AdaptiveMPP{T} )
     return @sprintf( "adaptiveMPP_%02d_%03d", p.cxt_length, trunc(Int64,100*p.α) );
 end
 
-function predict_from_subcontext{T}( p::adaptiveMPP{T}, sub_cxt::Vector{T} )
+function predict_from_subcontext{T}( p::AdaptiveMPP{T}, sub_cxt::Vector{T} )
     # Create a dictionary with symbols
     symbols = Dict( k => (p.model[[k]]/p.model.value) for k ∈ keys(children(p.model,Vector{T}())) );
 

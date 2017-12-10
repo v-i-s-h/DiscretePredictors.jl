@@ -2,7 +2,7 @@
 
 @testset "AdaptiveMPP" begin
 
-p       = adaptiveMPP{Char}(2);
+p       = AdaptiveMPP{Char}(2);
 data    = [ 'a', 'b', 'c', 'c', 'd',
             'b', 'c', 'd', 'c', 'b',
             'c', 'b', 'c' ];
@@ -80,9 +80,9 @@ end
     # Reusing p
     # @test get_best_symbol( p ) == 'b'
     # For untrained model
-    @test get_best_symbol( adaptiveMPP{Int64}(4) ) == nothing
-    @test get_best_symbol( adaptiveMPP{Char}(4) ) == nothing
-    @test get_best_symbol( adaptiveMPP{String}(4) ) == nothing
+    @test get_best_symbol( AdaptiveMPP{Int64}(4) ) == nothing
+    @test get_best_symbol( AdaptiveMPP{Char}(4) ) == nothing
+    @test get_best_symbol( AdaptiveMPP{String}(4) ) == nothing
 end
 
 # @testset "Info tests" begin
@@ -92,7 +92,7 @@ end
 
 @testset "Random Sequence test" begin
     for idx = 1:10
-        learnt_model    = adaptiveMPP{Int64}(5);
+        learnt_model    = AdaptiveMPP{Int64}(5);
         @test @test_nothrow for i = 1:1000
             symbol = trunc(Int64,10*rand());
             add!( learnt_model, symbol );

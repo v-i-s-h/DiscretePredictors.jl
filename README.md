@@ -21,6 +21,7 @@ API Overview:
 - `size( p )` returns the number of nodes in current prediction model `p.model`
 
 Available Predictors:
+- Adaptive MPP (`AdaptiveMPP`)
 - Active LeZi (`ALZ`)
 - Dependency Graph (`DG`)
 - Discounted HEDGE on KOM (`dHedgePPM`)
@@ -28,3 +29,44 @@ Available Predictors:
 - K-th Order Markov Model (`KOM`)
 - LeZi-Update (`LeZiUpdate`)
 - LeZi78 (`LeZi78`)
+
+### Example
+```julia
+# Initialize a predictor
+julia> p = KOM{Char}(4)
+DiscretePredictors.KOM{Char}([*] (0)
+, Char[], 4)
+# Add some symbols
+julia> add!( p, 'a' )
+julia> add!( p, 'b' )
+julia> add!( p, 'c' )
+julia> add!( p, 'b' )
+# Print out the model
+julia> p
+DiscretePredictors.KOM{Char}([*] (4)
++---[b] (2)
+     +---[c] (1)
+          +---[b] (1)
++---[a] (1)
+     +---[b] (1)
+          +---[c] (1)
+               +---[b] (1)
++---[c] (1)
+     +---[b] (1)
+, ['a', 'b', 'c', 'b'], 4)
+# Get prediction
+julia> predict( p )
+Dict{Char,Float64} with 3 entries:
+  'b' => 0.25
+  'a' => 0.125
+  'c' => 0.625
+# Get best symbol
+julia> get_best_symbol( p )
+'c': ASCII/Unicode U+0063 (category Ll: Letter, lowercase)
+julia> info_string( p )
+"KOM(4)"
+julia> unique_string( p )
+"KOM_04"
+julia> size( p )
+10
+```

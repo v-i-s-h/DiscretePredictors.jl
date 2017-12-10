@@ -1,5 +1,30 @@
 # Discounted HEDEGEd KOM
 
+"""
+    dHedgePPM{SymbolType}( c::Int, [ β::Float64 = 1.0, γ::Float64 = 1.0 ] )
+
+Creates a Discounted HEDGE Predictor for `SymbolType` with context length `c`, learning
+parameter ``β`` and discounting parameter ``γ``.
+
+# Examples
+```julia-repl
+julia> p = dHedgePPM{Char}( 4 )
+DiscretePredictors.dHedgePPM{Char}([*] (0)
+, Char[], 4, 1.0, 1.0, [1.0, 1.0, 1.0, 1.0, 1.0], Dict{Char,Float64}[Dict{Char,Float64}(), Dict{Char,Float64}(), Dict{Char,Float64}(), Dict{Char,Float64}(), Dict{Char,Float64}()])
+
+julia> p = dHedgePPM{Char}( 4, 0.8 )
+DiscretePredictors.dHedgePPM{Char}([*] (0)
+, Char[], 4, 0.8, 1.0, [1.0, 1.0, 1.0, 1.0, 1.0], Dict{Char,Float64}[Dict{Char,Float64}(), Dict{Char,Float64}(), Dict{Char,Float64}(), Dict{Char,Float64}(), Dict{Char,Float64}()])
+
+julia> p = dHedgePPM{Char}( 4, 0.9, 0.8 )
+DiscretePredictors.dHedgePPM{Char}([*] (0)
+, Char[], 4, 0.9, 0.8, [1.0, 1.0, 1.0, 1.0, 1.0], Dict{Char,Float64}[Dict{Char,Float64}(), Dict{Char,Float64}(), Dict{Char,Float64}(), Dict{Char,Float64}(), Dict{Char,Float64}()])
+```
+
+Reference:
+Raj, Vishnu, and Sheetal Kalyani. "An aggregating strategy for shifting experts in discrete sequence prediction." arXiv preprint arXiv:1708.01744 (2017).
+"""
+
 type dHedgePPM{T} <: BasePredictor{T}
     model::Trie{T,Int64}
     context::Vector{T}
@@ -35,6 +60,8 @@ function add!{T}( p::dHedgePPM{T}, sym::T )
     if length(p.context) > p.cxt_length
         shift!( p.context )
     end
+
+    nothing
 end
 
 

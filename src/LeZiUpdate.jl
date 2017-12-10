@@ -1,5 +1,30 @@
 # LeZi-Update predictor
 
+"""
+    LeZiUpdate{SymbolType}()
+
+Creates a LeZiUpdate predictor for `SymbolType`. `SymbolType` can be any valid type including
+`Char`, `Int64` etc.,
+
+# Examples
+```julia-repl
+julia> p = LeZiUpdate{Char}()
+DiscretePredictors.LeZiUpdate{Char}(Array{Char,1}[], [*] (0)
+, Char[], Char[])
+
+julia> p = LeZiUpdate{Int64}()
+DiscretePredictors.LeZiUpdate{Int64}(Array{Int64,1}[], [*] (0)
+, Int64[], Int64[])
+
+julia> p = LeZiUpdate{String}()
+DiscretePredictors.LeZiUpdate{String}(Array{String,1}[], [*] (0)
+, String[], String[])
+```
+
+Reference:
+Bhattacharya, Amiya, and Sajal K. Das. "LeZi-update: An information-theoretic framework for personal mobility tracking in PCS networks." Wireless Networks 8.2/3 (2002): 121-135.
+"""
+
 type LeZiUpdate{T} <: BasePredictor{T}
     dictionary::Vector{Vector{T}}
     model::Trie{T,Int64}
@@ -35,6 +60,8 @@ function add!{T}( p::LeZiUpdate{T}, sym::T )
     else
         p.context   = p.phrase[1:end];
     end
+
+    nothing
 end
 
 function predict{T}( p::LeZiUpdate{T} )

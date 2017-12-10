@@ -1,5 +1,25 @@
 # Dependency Graph is a predictor based on Variable order Markov Chains
-# Based on: Padmanabhan, V. N., & Mogul, J. C. (1996). Using predictive prefetching to improve World Wide Web latency. ACM SIGCOMM Computer Communication Review, 26(3), 22–36. http://doi.org/10.1145/235160.235164
+
+"""
+    DG{SymbolType}(win_length::Int)
+
+Creates a Dependency Graph predictor for `SymbolType` with lookahead window of `win_length`.
+`SymbolType` can be any valid type including `Char`, `Int64` etc.,
+    
+# Examples
+```julia-repl
+jjulia> p = DG{Char}( 4 )
+DiscretePredictors.DG{Char}([*] (0)
+, Char[], 4)
+
+julia> p = DG{Int64}( 3 )
+DiscretePredictors.DG{Int64}([*] (0)
+, Int64[], 3)
+```
+
+Reference:
+Padmanabhan, Venkata N., and Jeffrey C. Mogul. "Using predictive prefetching to improve world wide web latency." ACM SIGCOMM Computer Communication Review 26.3 (1996): 22-36.
+"""
 
 type DG{T} <: BasePredictor{T}
     model::Trie{T,Int64}
@@ -31,6 +51,8 @@ function add!{T}( p::DG{T}, sym::T )
     if length(p.window) > p.win_length    # Trim window
         shift!( p.window );     # Discard oldest symbol
     end
+
+    nothing
 end
 
 function predict{T}( p::DG{T} )

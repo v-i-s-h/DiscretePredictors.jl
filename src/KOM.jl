@@ -1,5 +1,31 @@
 # Kth Order Markov Model
 
+"""
+    KOM{SymbolType}(context_length::Int64)
+
+Creates a K-th Order Markov Model predictor with a context depth of `context_length` for 
+`SymbolType`. `SymbolType` can be any valid type including `Char`, `Int64` etc.,
+
+# Examples
+```julia-repl
+julia> p = KOM{Char}(3)
+DiscretePredictors.KOM{Char}([*] (0)
+, Char[], 3)
+
+julia> p = KOM{Int64}(5)
+DiscretePredictors.KOM{Int64}([*] (0)
+, Int64[], 5)
+
+julia> p = KOM{String}(4)
+DiscretePredictors.KOM{String}([*] (0)
+, String[], 4)
+```
+
+Reference:
+
+"""
+
+
 type KOM{T} <: BasePredictor{T}
     model::Trie{T,Int64}
     context::Vector{T}
@@ -23,6 +49,8 @@ function add!{T}( p::KOM{T}, sym::T )
     if length(p.context) > p.cxt_length
         shift!( p.context )
     end
+
+    nothing
 end
 
 function predict{T}( p::KOM{T} )

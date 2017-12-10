@@ -1,5 +1,30 @@
 # LZ78 Prediction Implementation
 
+"""
+    LZ78{SymbolType}()
+
+Creates a LZ78 predictor for `SymbolType`. `SymbolType` can be any valid type including
+`Char`, `Int64` etc.,
+
+# Examples
+```julia-repl
+julia> p = LZ78{Int64}()
+DiscretePredictors.LZ78{Int64}([*] (0)
+, Int64[], Int64[])
+
+julia> p = LZ78{Char}()
+DiscretePredictors.LZ78{Char}([*] (0)
+, Char[], Char[])
+
+julia> p = LZ78{String}()
+DiscretePredictors.LZ78{String}([*] (0)
+, String[], String[])
+```
+
+Reference:
+Ziv, Jacob, and Abraham Lempel. "Compression of individual sequences via variable-rate coding." IEEE transactions on Information Theory 24.5 (1978): 530-536.
+"""
+
 type LZ78{T} <: BasePredictor{T}
     model::Trie{T,Int64}
     phrase::Vector{T}
@@ -31,6 +56,8 @@ function add!{T}( p::LZ78{T}, sym::T )
         p.context = p.phrase[2:end];
         p.phrase  = Vector{T}();
     end
+    
+    nothing
 end
 
 function predict{T}( p::LZ78{T} )

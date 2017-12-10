@@ -1,4 +1,24 @@
-# PPM Predictor implementation
+# Active LeZi
+"""
+    ALZ{SymbolType}()
+
+Creates an Active LeZi predictor for `SymbolType`. `SymbolType` can be any valid type including
+`Char`, `Int64` etc.,
+        
+# Examples
+```julia-repl
+julia> p = ALZ{Char}()
+DiscretePredictors.ALZ{Char}(Array{Char,1}[], [*] (0)
+, Char[], Char[], 0)
+
+julia> p = ALZ{Int64}()
+DiscretePredictors.ALZ{Int64}(Array{Int64,1}[], [*] (0)
+, Int64[], Int64[], 0)
+```
+
+Reference:
+Gopalratnam, Karthik, and Diane J. Cook. "Online sequential prediction via incremental parsing: The active lezi algorithm." IEEE Intelligent Systems 22.1 (2007).
+"""
 
 type ALZ{T} <: BasePredictor{T}
     dictionary::Vector{Vector{T}}
@@ -38,6 +58,8 @@ function add!{T}( p::ALZ{T}, sym::T )
         end
         shift!( keyBuffer )
     end
+
+    nothing
 end
 
 function predict{T}( p::ALZ{T} )
