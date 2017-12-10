@@ -16,7 +16,7 @@ type adaptiveMPP{T} <: BasePredictor{T}
                                                 1/(1+_c)*ones(Float64,_c+1), fill(Dict{T,Float64}(),_c+1) );
 end
 
-function add{T}( p::adaptiveMPP{T}, sym::T )
+function add!{T}( p::adaptiveMPP{T}, sym::T )
     p.model.value += 1;
 
     # Calculate expert loss

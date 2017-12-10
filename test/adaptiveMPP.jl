@@ -1,6 +1,6 @@
 # Tests for dHedgePPM Predictor
 
-@testset "dHedgePPM" begin
+@testset "AdaptiveMPP" begin
 
 p       = adaptiveMPP{Char}(2);
 data    = [ 'a', 'b', 'c', 'c', 'd',
@@ -10,7 +10,7 @@ data    = [ 'a', 'b', 'c', 'c', 'd',
 @testset "Online Prediction" begin
     # Create model
     for symbol ∈ data
-        add( p, symbol );
+        add!( p, symbol );
         predictions     = predict( p );
         if p.model.value > 1
             # For Sequences with length less than cxt_length, current implementation
@@ -95,7 +95,7 @@ end
         learnt_model    = adaptiveMPP{Int64}(5);
         @test @test_nothrow for i = 1:1000
             symbol = trunc(Int64,10*rand());
-            add( learnt_model, symbol );
+            add!( learnt_model, symbol );
             predict( learnt_model );
         end
     end

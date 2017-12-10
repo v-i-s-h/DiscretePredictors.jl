@@ -10,7 +10,7 @@ type DG{T} <: BasePredictor{T}
     # (::Type{DG{T}}){T}( _c::Int )   = new{T}( Trie{T,Int64}(), Vector{T}(), _c );
 end
 
-function add{T}( p::DG{T}, sym::T )
+function add!{T}( p::DG{T}, sym::T )
     p.model.value += 1;
     # Check if this symbol is new
     if sym ∉ keys(p.model.children)

@@ -10,7 +10,7 @@ data    = [ 'a', 'b', 'c', 'c', 'd',
 @testset "Online Prediction" begin
     # Create model
     for symbol ∈ data
-        add( p, symbol );
+        add!( p, symbol );
         predictions     = predict( p );
         # Ensure that symbol affinitites are non-negative
         @test mapreduce(sym->predictions[sym],+,keys(predictions)) >= 0.00
@@ -92,7 +92,7 @@ end
         learnt_model    = ewPPM{Int64}(5,0.75);
         @test @test_nothrow for i = 1:1000
             symbol = trunc(Int64,10*rand());
-            add( learnt_model, symbol );
+            add!( learnt_model, symbol );
             predict( learnt_model );
         end
     end

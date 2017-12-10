@@ -17,7 +17,7 @@ data    = [ 'a', 'a', 'a', 'b', 'a',
 @testset "Online Prediction" begin
     # Create model
     for symbol ∈ data
-        add( p, symbol );
+        add!( p, symbol );
         predictions     = predict( p );
         @test mapreduce(sym->predictions[sym],+,keys(predictions)) <= 1.00;     # :/ not adding upto 1.0
     end
@@ -89,7 +89,7 @@ end
         learnt_model    = LeZiUpdate{Int64}();
         @test @test_nothrow for i = 1:1000
             symbol = trunc(Int64,10*rand());
-            add( learnt_model, symbol );
+            add!( learnt_model, symbol );
             predict( learnt_model );
         end
     end

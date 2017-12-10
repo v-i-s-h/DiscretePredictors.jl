@@ -10,7 +10,7 @@ type LZ78{T} <: BasePredictor{T}
     # (::Type{LZ78{T}}){T}() = new{T}( Trie{T,Int64}(), Vector{T}(), Vector{T}() );
 end
 
-function add{T}( p::LZ78{T}, sym::T )
+function add!{T}( p::LZ78{T}, sym::T )
     p.model.value += 1;
 
     # Update model

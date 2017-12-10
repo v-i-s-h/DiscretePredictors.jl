@@ -12,7 +12,7 @@ type ALZ{T} <: BasePredictor{T}
     # (::Type{ALZ{T}}){T}() = new{T}( Vector{Vector{T}}(), Trie{T,Int64}(), Vector{T}(), Vector{T}(), 0 );
 end
 
-function add{T}( p::ALZ{T}, sym::T )
+function add!{T}( p::ALZ{T}, sym::T )
     p.model.value += 1;   # Update number of symbols seen by model
 
     push!( p.phrase, sym );

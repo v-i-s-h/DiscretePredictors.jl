@@ -13,7 +13,7 @@ type ewPPM{T} <: BasePredictor{T}
                                                 ones(Float64,_c+1), fill(Dict{T,Float64}(),_c+1) );
 end
 
-function add{T}( p::ewPPM{T}, sym::T )
+function add!{T}( p::ewPPM{T}, sym::T )
     p.model.value += 1;
 
     # Update weights

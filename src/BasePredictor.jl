@@ -4,7 +4,7 @@ import Base.size
 abstract type BasePredictor{T}
 end
 
-function add{T}( p::BasePredictor{T}, sym::T )
+function add!{T}( p::BasePredictor{T}, sym::T )
     nothing
 end
 

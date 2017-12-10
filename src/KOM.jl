@@ -9,7 +9,7 @@ type KOM{T} <: BasePredictor{T}
     # (::Type{KOM{T}}){T}(_c::Int64) = new{T}( Trie{T,Int64}(), Vector{T}(), _c );
 end
 
-function add{T}( p::KOM{T}, sym::T )
+function add!{T}( p::KOM{T}, sym::T )
     p.model.value += 1;
 
     # Create node path

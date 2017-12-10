@@ -10,7 +10,7 @@ type LeZiUpdate{T} <: BasePredictor{T}
     # (::Type{LeZiUpdate{T}}){T}() = new{T}( Vector{Vector{}}(), Trie{T,Int64}(), Vector{T}(), Vector{T}() );
 end
 
-function add{T}( p::LeZiUpdate{T}, sym::T )
+function add!{T}( p::LeZiUpdate{T}, sym::T )
     p.model.value += 1;   # Update number of symbols seen by model
 
     push!( p.phrase, sym );

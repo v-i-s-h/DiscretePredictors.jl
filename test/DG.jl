@@ -11,7 +11,7 @@ data    = [ 'a', 'b', 'c', 'c', 'd',
     n = 1;
     # Create model
     for symbol ∈ data
-        add( p, symbol );
+        add!( p, symbol );
         predictions     = predict( p );
         s = mapreduce(sym->predictions[sym],+,keys(predictions));
         # if s == 0.00
@@ -90,7 +90,7 @@ end
         learnt_model    = DG{Int64}(5);
         @test @test_nothrow for i = 1:1000
             symbol = trunc(Int64,10*rand());
-            add( learnt_model, symbol );
+            add!( learnt_model, symbol );
             predict( learnt_model );
         end
     end
