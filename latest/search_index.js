@@ -33,9 +33,9 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "#DiscretePredictors",
+    "location": "#DiscretePredictors.DiscretePredictors",
     "page": "Home",
-    "title": "DiscretePredictors",
+    "title": "DiscretePredictors.DiscretePredictors",
     "category": "Module",
     "text": "A Julia package for online discrete sequence prediction.\n\nAPI Overview:\n\np = Predictor{SymbolType}(parameters...) creates a predictor instance p with    prediction algorithm Predictor (see choices below) of symbols of SymbolType with    specified the parameters\nadd!( p, sym ) adds a symbol to the model\npredict( p ) computes a probability distribution over the symbols seen so far by the    model and returns it as dictionary of Dict{SymbolType,Float64}\ninfo_string( p ) returns a human readable string about the predictor p\nunique_string( p ) returns a unique string for the predictor p with paramter configuration\nget_best_symbol( p )  returns the symbol of type SymbolType with highest probability    under current context\nsize( p ) returns the number of nodes in current prediction model p.model\n\nAvailable Predictors:\n\nAdaptive MPP (AdaptiveMPP)\nActive LeZi (ALZ)\nDependency Graph (DG)\nDiscounted HEDGE on KOM (dHedgePPM)\nError Weighted PPM (ewPPM)\nK-th Order Markov Model (KOM)\nLeZi-Update (LeZiUpdate)\nLeZi78 (LZ78)\n\nExample\n\n# Initialize a predictor\njulia> p = KOM{Char}(4)\nDiscretePredictors.KOM{Char}([*] (0)\n, Char[], 4)\n\n# Add some symbols\njulia> add!( p, 'a' )\n\njulia> add!( p, 'b' )\n\njulia> add!( p, 'c' )\n\njulia> add!( p, 'b' )\n\n# Print out the model\njulia> p\nDiscretePredictors.KOM{Char}([*] (4)\n+---[b] (2)\n     +---[c] (1)\n          +---[b] (1)\n+---[a] (1)\n     +---[b] (1)\n          +---[c] (1)\n               +---[b] (1)\n+---[c] (1)\n     +---[b] (1)\n, ['a', 'b', 'c', 'b'], 4)\n\n# Get prediction\njulia> predict( p )\nDict{Char,Float64} with 3 entries:\n  'b' => 0.25\n  'a' => 0.125\n  'c' => 0.625\n\n# Get best symbol\njulia> get_best_symbol( p )\n'c': ASCII/Unicode U+0063 (category Ll: Letter, lowercase)\n\njulia> info_string( p )\n\"KOM(4)\"\n\njulia> unique_string( p )\n\"KOM_04\"\n\njulia> size( p )\n10\n\n\n\n\n"
 },
