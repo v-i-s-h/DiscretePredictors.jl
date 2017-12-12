@@ -13,7 +13,7 @@ the package are:
 - `p = Predictor{SymbolType}(parameters...)` creates a predictor instance `p` with 
     prediction algorithm `Predictor` (see choices below) of symbols of `SymbolType` with 
     specified the `parameters`
-- `add( p, sym )` adds a symbol to the model
+- `add!( p, sym )` adds a symbol to the model
 - `predict( p )` computes a probability distribution over the symbols seen so far by the 
     model and returns it as dictionary of `Dict{SymbolType,Float64}`
 - `info_string( p )` returns a human readable string about the predictor `p`

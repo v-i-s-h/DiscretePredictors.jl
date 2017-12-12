@@ -35,7 +35,7 @@ module DiscretePredictors
         size
 
 """
-A Julia package for discrete sequence prediction.
+A Julia package for online discrete sequence prediction.
 
 API Overview:
 - `p = Predictor{SymbolType}(parameters...)` creates a predictor instance `p` with 

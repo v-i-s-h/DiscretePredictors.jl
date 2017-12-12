@@ -124,7 +124,7 @@ end
 """
     size( p::Predictor{SymbolType} )
 
-Returns the number of nodes on the model of predictor `p` including root node.
+Returns the number of nodes in the model of predictor `p` including root node.
 
 ## Example
 ```julia-repl
