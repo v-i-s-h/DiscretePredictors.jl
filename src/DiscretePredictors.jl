@@ -51,14 +51,14 @@ API Overview:
 - `size( p )` returns the number of nodes in current prediction model `p.model`
 
 Available Predictors:
-- Adaptive MPP (`AdaptiveMPP`)
-- Active LeZi (`ALZ`)
-- Dependency Graph (`DG`)
-- Discounted HEDGE on KOM (`dHedgePPM`)
-- Error Weighted PPM (`ewPPM`)
-- K-th Order Markov Model (`KOM`)
-- LeZi-Update (`LeZiUpdate`)
-- LeZi78 (`LeZi78`)
+- Adaptive MPP ([`AdaptiveMPP`](@ref))
+- Active LeZi ([`ALZ`](@ref))
+- Dependency Graph ([`DG`](@ref))
+- Discounted HEDGE on KOM ([`dHedgePPM`](@ref))
+- Error Weighted PPM ([`ewPPM`](@ref))
+- K-th Order Markov Model ([`KOM`](@ref))
+- LeZi-Update ([`LeZiUpdate`](@ref))
+- LeZi78 ([`LZ78`](@ref))
 
 ## Example
 ```julia

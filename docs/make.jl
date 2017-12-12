@@ -2,7 +2,7 @@ using Documenter, DiscretePredictors
 
 makedocs(
     modules = [DiscretePredictors],
-    doctest = false,
+    doctest = true,
     format = :html,
     sitename = "DiscretePredictors.jl",
     authors = "Vishnu Raj",
@@ -26,6 +26,7 @@ makedocs(
 deploydocs(
     repo = "github.com/v-i-s-h/DiscretePredictors.jl.git",
     target = "build",
+    julia = "0.6",
     deps = nothing,
     make = nothing,
 )
