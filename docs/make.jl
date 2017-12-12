@@ -24,9 +24,10 @@ makedocs(
 )
 
 deploydocs(
-    repo = "github.com/v-i-s-h/DiscretePredictors.jl.git",
-    target = "build",
-    julia = "0.6",
-    deps = nothing,
-    make = nothing,
+    repo    = "github.com/v-i-s-h/DiscretePredictors.jl.git",
+    target  = "build",
+    # julia   = "0.6",
+    # osname  = 'linux',
+    deps    = nothing,
+    make    = nothing,
 )

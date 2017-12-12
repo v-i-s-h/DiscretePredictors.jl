@@ -9,6 +9,9 @@ the package are:
 - **Easily Extendable**
 - **Reproducible Research**
 
+[![](https://img.shields.io/badge/docs-stable-blue.svg)](https://v-i-s-h.github.io/DiscretePredictors.jl/stable)
+[![](https://img.shields.io/badge/docs-latest-blue.svg)](https://v-i-s-h.github.io/DiscretePredictors.jl/latest)
+
 ### API Overview:
 - `p = Predictor{SymbolType}(parameters...)` creates a predictor instance `p` with 
     prediction algorithm `Predictor` (see choices below) of symbols of `SymbolType` with 
