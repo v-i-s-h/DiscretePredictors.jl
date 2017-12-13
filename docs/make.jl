@@ -12,7 +12,7 @@ makedocs(
         "Manual" => Any[
             "Guide" => "man/guide.md",
             "man/examples.md",
-            "man/contributing.md",
+            # "man/contributing.md",
         ],
         "Library" => Any[
             "High Level Interface" => "lib/interface.md",
