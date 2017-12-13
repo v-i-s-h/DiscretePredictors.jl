@@ -7,6 +7,11 @@ the package are:
 - **Easily Extendable**
 - **Reproducible Research**
 
+**Build Status** 
+[![Build Status](https://travis-ci.org/v-i-s-h/DiscretePredictors.jl.svg?branch=master)](https://travis-ci.org/v-i-s-h/DiscretePredictors.jl)
+[![Build status](https://ci.appveyor.com/api/projects/status/github/v-i-s-h/discretepredictors-jl?branch=master&svg=true)](https://ci.appveyor.com/project/v-i-s-h/discretepredictors-jl)
+
+**Documentation**
 [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://v-i-s-h.github.io/DiscretePredictors.jl/stable)
 [![](https://img.shields.io/badge/docs-latest-blue.svg)](https://v-i-s-h.github.io/DiscretePredictors.jl/latest)
 
