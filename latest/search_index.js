@@ -81,6 +81,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "man/guide/#Accessing-Documentation-from-REPL-1",
+    "page": "Guide",
+    "title": "Accessing Documentation from REPL",
+    "category": "section",
+    "text": "All docs found here can also be accessed via REPL through Julia's help functionality.julia> using DiscretePredictors\n\nhelp?> predict\nsearch: predict BasePredictor DiscretePredictors permutedims permutedims! mapreducedim ipermutedims PermutedDimsArray\n\n  predict( p::Predictor{SymbolType} )\n\n  Returns a disctionary of Dict{SymbolType,Float64} with probabilities of next symbol.\n\n     Examples\n    ==========\n\n  julia> p = LZ78{Int64}()\n  DiscretePredictors.LZ78{Int64}([*] (0)\n  , Int64[], Int64[])\n  \n  julia> add!( p, 2 )\n  \n  julia> add!( p, 3 )\n  \n  julia> predict( p )\n  Dict{Int64,Float64} with 2 entries:\n    2 => 0.5\n    3 => 0.5"
+},
+
+{
     "location": "man/examples/#",
     "page": "Example",
     "title": "Example",
