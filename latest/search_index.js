@@ -90,34 +90,18 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "man/examples/#",
-    "page": "Example",
-    "title": "Example",
+    "page": "Examples",
+    "title": "Examples",
     "category": "page",
     "text": ""
 },
 
 {
-    "location": "man/examples/#Example-1",
-    "page": "Example",
-    "title": "Example",
+    "location": "man/examples/#Examples-1",
+    "page": "Examples",
+    "title": "Examples",
     "category": "section",
-    "text": ""
-},
-
-{
-    "location": "man/contributing/#",
-    "page": "Contributing Guidelines",
-    "title": "Contributing Guidelines",
-    "category": "page",
-    "text": ""
-},
-
-{
-    "location": "man/contributing/#Contributing-Guidelines-1",
-    "page": "Contributing Guidelines",
-    "title": "Contributing Guidelines",
-    "category": "section",
-    "text": ""
+    "text": "Examples of using this package can be found at examples folder.Users are also encouraged to refer test folder for usage of specific  predictors."
 },
 
 {
