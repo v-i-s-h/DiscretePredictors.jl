@@ -15,7 +15,7 @@ Pages = ["man/guide.md"]
 Pages = ["lib/interface.md", "lib/predictors.md"]
 ```
 
-## Breif Overview
+## Brief Overview
 ```@docs
 DiscretePredictors
 ```
