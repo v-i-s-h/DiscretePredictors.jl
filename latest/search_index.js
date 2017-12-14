@@ -41,9 +41,9 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "#Breif-Overview-1",
+    "location": "#Brief-Overview-1",
     "page": "Home",
-    "title": "Breif Overview",
+    "title": "Brief Overview",
     "category": "section",
     "text": "DiscretePredictors"
 },
