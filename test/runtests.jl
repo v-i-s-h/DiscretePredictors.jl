@@ -1,5 +1,5 @@
 using DiscretePredictors
-using Base.Test
+using Test
 
 macro test_nothrow(ex)
     quote
@@ -34,7 +34,7 @@ if length(ARGS) > 0
 end
 
 for t in tests
-    fp = joinpath( dirname(@__FILE__), "$t.jl" );
-    println( "Testing : ", t );
-    include( fp );
+    fp = joinpath( dirname(@__FILE__), "$t.jl" )
+    println( "Testing : ", t )
+    include( fp )
 end

@@ -18,7 +18,7 @@ DiscretePredictors.LZ78{Char}([*] (0)
 julia> add!( p, 'd' )
 ```
 """
-function add!{T}( p::BasePredictor{T}, sym::T )
+function add!( p::BasePredictor{T}, sym::T ) where {T}
     nothing
 end
 
@@ -43,8 +43,8 @@ Dict{Int64,Float64} with 2 entries:
   3 => 0.5
 ```
 """
-function predict{T}( p::BasePredictor{T} )
-    return Dict{T,Float64}();
+function predict( p::BasePredictor{T} ) where {T}
+    return Dict{T,Float64}()
 end
 
 """
@@ -62,8 +62,8 @@ julia> info_string( p )
 "DG(4)"
 ```
 """
-function info_string{T}( p::BasePredictor{T} )
-    return @sprintf( "BasePredictor" );
+function info_string( p::BasePredictor{T} ) where {T}
+    return @sprintf( "BasePredictor" )
 end
 
 """
@@ -81,8 +81,8 @@ julia> unique_string( p )
 "DG_04"
 ```
 """
-function unique_string{T}( p::BasePredictor{T} )
-    return @sprintf( "BASE" );
+function unique_string( p::BasePredictor{T} ) where {T}
+    return @sprintf( "BASE" )
 end
 
 """
@@ -103,22 +103,21 @@ julia> get_best_symbol( p, 2 )
 2
 ```
 """
-# Function to get highest probability symbol
-function get_best_symbol{T}( p::BasePredictor{T}, default_sym = nothing )
-    symbols     = predict( p );
-    return get_best_symbol( symbols, default_sym );
+function get_best_symbol( p::BasePredictor{T}, default_sym = nothing ) where {T}
+    symbols     = predict( p )
+    return get_best_symbol( symbols, default_sym )
 end
 
-function get_best_symbol{T}( symbols::Dict{T,Float64}, default_sym = nothing )
-    best_symbol = default_sym;
-    maxP        = 0.00;
+function get_best_symbol( symbols::Dict{T,Float64}, default_sym = nothing ) where {T}
+    best_symbol = default_sym
+    maxP        = 0.00
     for (symbol,prob) in symbols
         if prob > maxP
             best_symbol = symbol
             maxP        = prob
         end
     end
-    return best_symbol;
+    return best_symbol
 end
 
 """
@@ -153,6 +152,6 @@ julia> p.model
                +---[2] (1)
 ```
 """
-function size{T}( p::BasePredictor{T} )
-    return length(keys(p.model)) + 1;
+function size( p::BasePredictor{T} ) where {T}
+    return length(keys(p.model)) + 1
 end

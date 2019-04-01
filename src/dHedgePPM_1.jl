@@ -1,7 +1,7 @@
 # Discounted HEDEGEd KOM
 
 # With p-loss
-type dHedgePPM_1{T} <: BasePredictor{T}
+mutable struct dHedgePPM_1{T} <: BasePredictor{T}
     model::Trie{T,Int64}
     context::Vector{T}
     cxt_length::Int64
@@ -15,7 +15,7 @@ type dHedgePPM_1{T} <: BasePredictor{T}
                                                 ones(Float64,_c+1), fill(Dict{T,Float64}(),_c+1) );
 end
 
-function add{T}( p::dHedgePPM_1{T}, sym::T )
+function add( p::dHedgePPM_1{T}, sym::T ) where {T}
     p.model.value += 1;
 
     # Update weights
@@ -34,7 +34,7 @@ function add{T}( p::dHedgePPM_1{T}, sym::T )
     push!( p.context, sym );
     buffer  = p.context[1:end];
     while !isempty(buffer)
-        p.model[buffer] = (haskey(p.model,buffer))? p.model[buffer]+1: 1;
+        p.model[buffer] = (haskey(p.model,buffer)) ? p.model[buffer]+1 : 1;
         shift!( buffer )
     end
 
@@ -44,7 +44,7 @@ function add{T}( p::dHedgePPM_1{T}, sym::T )
 end
 
 
-function predict{T}( p::dHedgePPM_1{T} )
+function predict( p::dHedgePPM_1{T} ) where {T}
     # Clear away last predictions
     p.last_prediction   = fill(Dict{T,Float64}(),p.cxt_length+1);
 
@@ -86,17 +86,17 @@ function predict{T}( p::dHedgePPM_1{T} )
     return symbols;
 end
 
-function info_string{T}( p::dHedgePPM_1{T} )
+function info_string( p::dHedgePPM_1{T} ) where {T}
     return @sprintf( "dHedgePPM1(%d,\$\\beta\$ = %3.2f,\$\\gamma\$ = %3.2f)",
                             p.cxt_length, p.β, p.γ );
 end
 
-function unique_string{T}( p::dHedgePPM_1{T} )
+function unique_string( p::dHedgePPM_1{T} ) where {T}
     return @sprintf( "dHedgePPM1_%02d_%03d_%03d", p.cxt_length,
                         trunc(Int64,100*p.β), trunc(Int64,100*p.γ)  );
 end
 
-function predict_from_subcontext{T}( p::dHedgePPM_1{T}, sub_cxt::Vector{T} )
+function predict_from_subcontext( p::dHedgePPM_1{T}, sub_cxt::Vector{T} )  where {T}
     # Create a dictionary with symbols
     symbols = Dict( k => (p.model[[k]]/p.model.value) for k ∈ keys(children(p.model,Vector{T}())) );
 

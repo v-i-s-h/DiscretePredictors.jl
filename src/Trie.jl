@@ -1,8 +1,8 @@
 
-import Base: <, <=, ==, length, isempty, start, next, done,
+import Base: <, <=, ==, length, isempty, 
              show, dump, empty!, getindex, setindex!, get, get!,
              in, haskey, keys, merge, copy, cat,
-             push!, pop!, shift!, unshift!, insert!,
+             push!, pop!, insert!,
              union!, delete!, similar, sizehint!,
              isequal, hash,
              map, reverse,
@@ -11,15 +11,15 @@ import Base: <, <=, ==, length, isempty, start, next, done,
              ReverseOrdering, Reverse, Lt,
              isless,
              union, intersect, symdiff, setdiff, issubset,
-             find, searchsortedfirst, searchsortedlast, endof, in
+             searchsortedfirst, searchsortedlast, in
 
 
-type Trie{T1,T2}
+mutable struct Trie{T1,T2}
     value::T2
     children::Dict{T1,Trie{T1,T2}}
     is_key::Bool
 
-    function (::Type{Trie{T1,T2}}){T1,T2}()
+    function Trie{T1,T2}() where {T1,T2}
         self            = new{T1,T2}()
         self.value      = 0;
         self.children   = Dict{T1,Trie{T1,T2}}()
@@ -27,7 +27,7 @@ type Trie{T1,T2}
         self
     end
 
-    function (::Type{Trie{T1,T2}}){T1,T2}(ks, vs)
+    function Trie{T1,T2}(ks, vs) where {T1,T2}
         t = Trie{T1,T2}()
         for (k, v) in zip(ks, vs)
             t[k] = v
@@ -35,7 +35,7 @@ type Trie{T1,T2}
         return t
     end
 
-    function (::Type{Trie{T1,T2}}){T1,T2}(kv)
+    function Trie{T1,T2}(kv) where {T1,T2}
         t = Trie{T1,T2}()
         for (k,v) in kv
             t[k] = v
@@ -50,7 +50,7 @@ Trie() = Trie{Any,Any}()
 # Trie{K<:AbstractString,V}(kv::Associative{K,V}) = Trie{V}(kv)
 # Trie{K<:AbstractString}(ks::AbstractVector{K}) = Trie{Void}(ks, similar(ks, Void))
 
-function setindex!{T1,T2}(t::Trie{T1,T2}, val::T2, key::Vector{T1})
+function setindex!(t::Trie{T1,T2}, val::T2, key::Vector{T1}) where {T1,T2}
     node = t
     for element in key
         if !haskey(node.children, element)
@@ -62,7 +62,7 @@ function setindex!{T1,T2}(t::Trie{T1,T2}, val::T2, key::Vector{T1})
     node.value = val
 end
 
-function getindex{T1,T2}(t::Trie{T1,T2}, key::Vector{T1})
+function getindex(t::Trie{T1,T2}, key::Vector{T1}) where {T1,T2}
     if isempty(key)
         return t.value
     end
@@ -73,7 +73,7 @@ function getindex{T1,T2}(t::Trie{T1,T2}, key::Vector{T1})
     throw(KeyError("key not found: $key"))
 end
 
-function subtrie{T1,T2}(t::Trie{T1,T2}, prefix::Vector{T1})
+function subtrie(t::Trie{T1,T2}, prefix::Vector{T1}) where {T1,T2}
     node = t
     for element in prefix
         if !haskey(node.children, element)
@@ -85,12 +85,12 @@ function subtrie{T1,T2}(t::Trie{T1,T2}, prefix::Vector{T1})
     node
 end
 
-function haskey{T1,T2}(t::Trie{T1,T2}, key::Vector{T1})
+function haskey(t::Trie{T1,T2}, key::Vector{T1}) where {T1,T2}
     node = subtrie(t, key)
     node != nothing && node.is_key
 end
 
-function get{T1,T2}(t::Trie{T1,T2}, key::Vector{T1}, notfound)
+function get(t::Trie{T1,T2}, key::Vector{T1}, notfound) where {T1,T2}
     if isempty(key)
         return t.value
     end
@@ -101,7 +101,7 @@ function get{T1,T2}(t::Trie{T1,T2}, key::Vector{T1}, notfound)
     notfound
 end
 
-function keys{T1,T2}(t::Trie{T1,T2}, prefix::Vector{T1}=Array{T1,1}(), found=Array{Array{T1,1},1}())
+function keys(t::Trie{T1,T2}, prefix::Vector{T1}=Array{T1,1}(), found=Array{Array{T1,1},1}()) where {T1,T2}
     # println( "Processing: ", t );
     if t.is_key
         push!(found, prefix)
@@ -112,23 +112,23 @@ function keys{T1,T2}(t::Trie{T1,T2}, prefix::Vector{T1}=Array{T1,1}(), found=Arr
     found
 end
 
-function keys_with_prefix{T1,T2}(t::Trie{T1,T2}, prefix::Vector{T1})
+function keys_with_prefix(t::Trie{T1,T2}, prefix::Vector{T1}) where {T1,T2}
     st = subtrie(t, prefix)
     st != nothing ? keys(st,prefix) : []
 end
 
-function children{T1,T2}(t::Trie{T1,T2}, prefix::Vector{T1} )
+function children(t::Trie{T1,T2}, prefix::Vector{T1} ) where {T1,T2}
     st  = subtrie( t, prefix )
     st != nothing ? st.children : Dict{T1,Trie{T1,T2}}();
 end
 
 # Display functions
-function show{T1,T2}( io::IO, t::Trie{T1,T2} )
+function show( io::IO, t::Trie{T1,T2} ) where {T1,T2}
     model_str = "[*]" * node_string( t, 1 );
     print( io, model_str );
 end
 
-function node_string{T1,T2}( t::Trie{T1,T2}, level::Int = 0 )
+function node_string( t::Trie{T1,T2}, level::Int = 0 ) where {T1,T2}
     str     = " " * "(" * string(t.value) * ")" * "\n";
     for child in keys(t.children)
         for i = 1:level-1

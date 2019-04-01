@@ -24,8 +24,7 @@ DiscretePredictors.LeZiUpdate{String}(Array{String,1}[], [*] (0)
 Reference:
 Bhattacharya, Amiya, and Sajal K. Das. "LeZi-update: An information-theoretic framework for personal mobility tracking in PCS networks." Wireless Networks 8.2/3 (2002): 121-135.
 """
-
-type LeZiUpdate{T} <: BasePredictor{T}
+mutable struct LeZiUpdate{T} <: BasePredictor{T}
     dictionary::Vector{Vector{T}}
     model::Trie{T,Int64}
     phrase::Vector{T}
@@ -35,69 +34,69 @@ type LeZiUpdate{T} <: BasePredictor{T}
     # (::Type{LeZiUpdate{T}}){T}() = new{T}( Vector{Vector{}}(), Trie{T,Int64}(), Vector{T}(), Vector{T}() );
 end
 
-function add!{T}( p::LeZiUpdate{T}, sym::T )
-    p.model.value += 1;   # Update number of symbols seen by model
+function add!( p::LeZiUpdate{T}, sym::T ) where {T}
+    p.model.value += 1   # Update number of symbols seen by model
 
-    push!( p.phrase, sym );
+    push!( p.phrase, sym )
     if p.phrase ∉ p.dictionary
-        push!( p.dictionary, p.phrase );
+        push!( p.dictionary, p.phrase )
 
         suffix = p.phrase[1:end];
         while !isempty( suffix )
             prefix  = suffix[1:end];
             while !isempty( prefix )
                 if haskey( p.model, prefix )
-                    p.model[prefix] += 1;
+                    p.model[prefix] += 1
                 else
-                    p.model[prefix] = 1;
+                    p.model[prefix] = 1
                 end
-                shift!( prefix );
+                popfirst!( prefix )
             end
-            pop!( suffix );
+            pop!( suffix )
         end
-        p.context   = p.phrase[2:end];
-        p.phrase    = Vector{T}();
+        p.context   = p.phrase[2:end]
+        p.phrase    = Vector{T}()
     else
-        p.context   = p.phrase[1:end];
+        p.context   = p.phrase[1:end]
     end
 
     nothing
 end
 
-function predict{T}( p::LeZiUpdate{T} )
+function predict( p::LeZiUpdate{T} ) where {T}
     # Create a dictionary with symbols
-    symbols = Dict( k => (p.model[[k]]/p.model.value) for k ∈ keys(children(p.model,Vector{T}())) );
+    symbols = Dict( k => (p.model[[k]]/p.model.value) for k ∈ keys(children(p.model,Vector{T}())) )
 
-    buffer  = Vector{T}();
+    buffer  = Vector{T}()
     for i = length(p.context):-1:1
-        unshift!( buffer, p.context[i] );
+        pushfirst!( buffer, p.context[i] )
         # println( "    Buffer: ", buffer );
-        list_of_children    = children( p.model, buffer );
+        list_of_children    = children( p.model, buffer )
         # Get sum of all children values
-        s   = isempty(list_of_children)?
-                0:
+        s   = isempty(list_of_children) ?
+                0 :
                 mapreduce( k->list_of_children[k].value, +, keys(list_of_children) );
         # Apply escape probability
-        esc_prob = (p.model[buffer]-s)/p.model[buffer];
+        esc_prob = (p.model[buffer]-s)/p.model[buffer]
         for symbol in keys(symbols)
-            symbols[symbol] *= esc_prob;
+            symbols[symbol] *= esc_prob
         end
         # Get each child probability
         for k ∈ keys(list_of_children)
             # println( "        ", k, " -> ", list_of_children[k].value )
-            symbols[k] += list_of_children[k].value/p.model[buffer];
+            symbols[k] += list_of_children[k].value/p.model[buffer]
         end
     end
 
     return symbols;
 end
 
-function info_string{T}( p::LeZiUpdate{T} )
-    return @sprintf( "LeZiUpdate" );
+function info_string( p::LeZiUpdate{T} ) where {T}
+    return @sprintf( "LeZiUpdate" )
 end
 
-function unique_string{T}( p::LeZiUpdate{T} )
-    return @sprintf( "LZUP" );
+function unique_string( p::LeZiUpdate{T} ) where {T}
+    return @sprintf( "LZUP" )
 end
 
 

@@ -49,9 +49,9 @@ test_model = Dict{Vector{Char},Int64}(
 @testset "Model Tests" begin
     # Verify Model
     @testset "Values" begin
-        @test p.model.value == 13;
+        @test p.model.value == 13
         for node ∈ keys( test_model )
-            @test p.model[node] == test_model[node];
+            @test p.model[node] == test_model[node]
         end
     end
 
@@ -72,7 +72,7 @@ test_model = Dict{Vector{Char},Int64}(
     # end
 
     @testset "Model Size" begin
-        @test size( p ) == 22;
+        @test size( p ) == 22
     end
 end
 
@@ -85,10 +85,10 @@ end
     @test get_best_symbol( AdaptiveMPP{String}(4) ) == nothing
 end
 
-# @testset "Info tests" begin
-#     @test info_string( p ) == "acc_dHPPM(2,\$\\beta\$ = 0.75,\$\\gamma\$ = 0.93)";
-#     @test unique_string( p ) == "dHPPM_02_075_093";
-# end
+@testset "Info tests" begin
+    @test info_string( p ) == "Adaptive MPP(2,\$\\alpha_t=0.10\$)"
+    @test unique_string( p ) == "adaptiveMPP_02_010"
+end
 
 @testset "Random Sequence test" begin
     for idx = 1:10

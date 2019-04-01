@@ -1,5 +1,7 @@
 module DiscretePredictors
 
+    using Printf
+
     include( "./Trie.jl" )
     include( "./BasePredictor.jl" )
     include( "./ALZ.jl" )

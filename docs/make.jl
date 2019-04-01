@@ -3,7 +3,7 @@ using Documenter, DiscretePredictors
 makedocs(
     modules = [DiscretePredictors],
     doctest = true,
-    format = :html,
+    format = Documenter.HTML(prettyurls=!("local" in ARGS)),
     sitename = "DiscretePredictors.jl",
     authors = "Vishnu Raj",
     linkcheck = false,
@@ -20,7 +20,7 @@ makedocs(
         ]
     ],
     # Use clean URLs, unless built as a "local" build
-    html_prettyurls = !("local" in ARGS),
+    # html_prettyurls = !("local" in ARGS),
 )
 
 deploydocs(

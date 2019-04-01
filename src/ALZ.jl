@@ -19,8 +19,7 @@ DiscretePredictors.ALZ{Int64}(Array{Int64,1}[], [*] (0)
 Reference:
 Gopalratnam, Karthik, and Diane J. Cook. "Online sequential prediction via incremental parsing: The active lezi algorithm." IEEE Intelligent Systems 22.1 (2007).
 """
-
-type ALZ{T} <: BasePredictor{T}
+mutable struct ALZ{T} <: BasePredictor{T}
     dictionary::Vector{Vector{T}}
     model::Trie{T,Int64}
     phrase::Vector{T}
@@ -28,73 +27,73 @@ type ALZ{T} <: BasePredictor{T}
     max_lz_length::Int64
 
     # Constructor
-    ALZ{T}() where {T} = new{T}( Vector{Vector{T}}(), Trie{T,Int64}(), Vector{T}(), Vector{T}(), 0 );
-    # (::Type{ALZ{T}}){T}() = new{T}( Vector{Vector{T}}(), Trie{T,Int64}(), Vector{T}(), Vector{T}(), 0 );
+    ALZ{T}() where {T} = new{T}( Vector{Vector{T}}(), Trie{T,Int64}(), Vector{T}(), Vector{T}(), 0 )
+    # (::Type{ALZ{T}}){T}() = new{T}( Vector{Vector{T}}(), Trie{T,Int64}(), Vector{T}(), Vector{T}(), 0 )
 end
 
-function add!{T}( p::ALZ{T}, sym::T )
+function add!( p::ALZ{T}, sym::T ) where {T}
     p.model.value += 1;   # Update number of symbols seen by model
 
     push!( p.phrase, sym );
 
     if p.phrase ∉ p.dictionary
-        push!( p.dictionary, p.phrase );
-        l   = length(p.phrase);
-        p.max_lz_length     = (l>p.max_lz_length)?l:p.max_lz_length;
-        p.phrase    = Vector{T}();
+        push!( p.dictionary, p.phrase )
+        l   = length(p.phrase)
+        p.max_lz_length     = (l>p.max_lz_length) ? l : p.max_lz_length
+        p.phrase    = Vector{T}()
     end
 
-    push!( p.window, sym );
+    push!( p.window, sym )
     if( length(p.window) > p.max_lz_length )
-        shift!( p.window )
+        popfirst!( p.window )
     end
 
-    keyBuffer   = p.window[1:end];
+    keyBuffer   = p.window[1:end]
     while !isempty(keyBuffer)
         if haskey(p.model,keyBuffer)
-            p.model[keyBuffer] += 1;
+            p.model[keyBuffer] += 1
         else
-            p.model[keyBuffer] = 1;
+            p.model[keyBuffer] = 1
         end
-        shift!( keyBuffer )
+        popfirst!( keyBuffer )
     end
 
     nothing
 end
 
-function predict{T}( p::ALZ{T} )
+function predict( p::ALZ{T} ) where {T}
     # Create a dictionary with symbols
-    symbols = Dict( k => (p.model[[k]]/p.model.value) for k ∈ keys(children(p.model,Vector{T}())) );
+    symbols = Dict( k => (p.model[[k]]/p.model.value) for k ∈ keys(children(p.model,Vector{T}())) )
 
-    buffer  = Vector{T}();
+    buffer  = Vector{T}()
     for i = length(p.window):-1:2
-        unshift!( buffer, p.window[i] );
-        list_of_children    = children( p.model, buffer );
+        pushfirst!( buffer, p.window[i] )
+        list_of_children    = children( p.model, buffer )
         # Get sum of all children values
-        s   = isempty(list_of_children)?
-                0:
+        s   = isempty(list_of_children) ?
+                0 :
                 mapreduce( k->list_of_children[k].value, +, keys(list_of_children) );
         # Apply escape probability
-        esc_prob = (p.model[buffer]-s)/p.model[buffer];
+        esc_prob = (p.model[buffer]-s)/p.model[buffer]
         for symbol in keys(symbols)
-            symbols[symbol] *= esc_prob;
+            symbols[symbol] *= esc_prob
         end
         # Get each child probability
         for k ∈ keys(list_of_children)
             # println( "        ", k, " -> ", list_of_children[k].value )
-            symbols[k] += list_of_children[k].value/p.model[buffer];
+            symbols[k] += list_of_children[k].value/p.model[buffer]
         end
     end
 
-    return symbols;
+    return symbols
 end
 
-function info_string{T}( p::ALZ{T} )
-    return @sprintf( "Active-LeZi" );
+function info_string( p::ALZ{T} ) where {T}
+    return @sprintf( "Active-LeZi" )
 end
 
-function unique_string{T}( p::ALZ{T} )
-    return @sprintf( "ALZ" );
+function unique_string( p::ALZ{T} ) where {T}
+    return @sprintf( "ALZ" )
 end
 
 """
