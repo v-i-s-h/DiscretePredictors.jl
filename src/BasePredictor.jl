@@ -29,16 +29,16 @@ Returns a disctionary of Dict{SymbolType,Float64} with probabilities of next sym
 
 ## Examples
 ```julia-repl
-julia> p = LZ78{Int64}()
-DiscretePredictors.LZ78{Int64}([*] (0)
-, Int64[], Int64[])
+julia> p = LZ78{Int}()
+DiscretePredictors.LZ78{Int}([*] (0)
+, Int[], Int[])
 
 julia> add!( p, 2 )
 
 julia> add!( p, 3 )
 
 julia> predict( p )
-Dict{Int64,Float64} with 2 entries:
+Dict{Int,Float64} with 2 entries:
   2 => 0.5
   3 => 0.5
 ```
@@ -93,9 +93,9 @@ predict, then returns `default_sym`.
 
 ## Example
 ```julia-repl
-julia> p = DG{Int64}(4)
-DiscretePredictors.DG{Int64}([*] (0)
-, Int64[], 4)
+julia> p = DG{Int}(4)
+DiscretePredictors.DG{Int}([*] (0)
+, Int[], 4)
 
 julia> get_best_symbol( p )
 
@@ -127,9 +127,9 @@ Returns the number of nodes in the model of predictor `p` including root node.
 
 ## Example
 ```julia-repl
-julia> p = KOM{Int64}(3)
-DiscretePredictors.KOM{Int64}([*] (0)
-, Int64[], 3)
+julia> p = KOM{Int}(3)
+DiscretePredictors.KOM{Int}([*] (0)
+, Int[], 3)
 
 julia> add!(p,1); add!(p,3); add!(p,2); add!(p,2); add!(p,1)
 

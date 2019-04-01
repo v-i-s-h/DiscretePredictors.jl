@@ -4,7 +4,7 @@
     DG{SymbolType}(win_length::Int)
 
 Creates a Dependency Graph predictor for `SymbolType` with lookahead window of `win_length`.
-`SymbolType` can be any valid type including `Char`, `Int64` etc.,
+`SymbolType` can be any valid type including `Char`, `Int` etc.,
     
 ## Examples
 ```julia-repl
@@ -12,21 +12,21 @@ jjulia> p = DG{Char}( 4 )
 DiscretePredictors.DG{Char}([*] (0)
 , Char[], 4)
 
-julia> p = DG{Int64}( 3 )
-DiscretePredictors.DG{Int64}([*] (0)
-, Int64[], 3)
+julia> p = DG{Int}( 3 )
+DiscretePredictors.DG{Int}([*] (0)
+, Int[], 3)
 ```
 
 Reference:
 Padmanabhan, Venkata N., and Jeffrey C. Mogul. "Using predictive prefetching to improve world wide web latency." ACM SIGCOMM Computer Communication Review 26.3 (1996): 22-36.
 """
 mutable struct DG{T} <: BasePredictor{T}
-    model::Trie{T,Int64}
+    model::Trie{T,Int}
     window::Vector{T}
-    win_length::Int64
+    win_length::Int
 
-    DG{T}( _c::Int ) where {T} = new( Trie{T,Int64}(), Vector{T}(), _c )
-    # (::Type{DG{T}}){T}( _c::Int )   = new{T}( Trie{T,Int64}(), Vector{T}(), _c );
+    DG{T}( _c::Int ) where {T} = new( Trie{T,Int}(), Vector{T}(), _c )
+    # (::Type{DG{T}}){T}( _c::Int )   = new{T}( Trie{T,Int}(), Vector{T}(), _c );
 end
 
 function add!( p::DG{T}, sym::T ) where {T}

@@ -25,15 +25,15 @@ Reference:
 Raj, Vishnu, and Sheetal Kalyani. "An aggregating strategy for shifting experts in discrete sequence prediction." arXiv preprint arXiv:1708.01744 (2017).
 """
 mutable struct dHedgePPM{T} <: BasePredictor{T}
-    model::Trie{T,Int64}
+    model::Trie{T,Int}
     context::Vector{T}
-    cxt_length::Int64
+    cxt_length::Int
     β::Float64
     γ::Float64
     weights::Vector{Float64}
     last_prediction::Vector{Dict{T,Float64}}
 
-    dHedgePPM{T}( _c::Int, _β::Float64 = 1.0, _γ::Float64 = 1.0 ) where {T} = new( Trie{T,Int64}(), Vector{T}(),
+    dHedgePPM{T}( _c::Int, _β::Float64 = 1.0, _γ::Float64 = 1.0 ) where {T} = new( Trie{T,Int}(), Vector{T}(),
                                                 _c, _β, _γ,
                                                 ones(Float64,_c+1), fill(Dict{T,Float64}(),_c+1) )
 end
@@ -113,7 +113,7 @@ end
 
 function unique_string( p::dHedgePPM{T} ) where {T}
     return @sprintf( "dHedgePPM_%02d_%03d_%03d", p.cxt_length,
-                        trunc(Int64,100*p.β), trunc(Int64,100*p.γ)  )
+                        trunc(Int,100*p.β), trunc(Int,100*p.γ)  )
 end
 
 function predict_from_subcontext( p::dHedgePPM{T}, sub_cxt::Vector{T} ) where {T}

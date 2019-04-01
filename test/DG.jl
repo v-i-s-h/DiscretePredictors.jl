@@ -24,7 +24,7 @@ data    = [ 'a', 'b', 'c', 'c', 'd',
 end
 
 # Test model
-test_model = Dict{Vector{Char},Int64}(
+test_model = Dict{Vector{Char},Int}(
     ['a'] => 2,
     ['a','b'] => 1,
     ['a','c'] => 1,
@@ -75,7 +75,7 @@ end
     # Reusing p
     @test get_best_symbol( p ) == 'c'
     # For untrained model
-    @test get_best_symbol( DG{Int64}(10) )  == nothing
+    @test get_best_symbol( DG{Int}(10) )  == nothing
     @test get_best_symbol( DG{Char}(10) )   == nothing
     @test get_best_symbol( DG{String}(10) ) == nothing
 end
@@ -87,9 +87,9 @@ end
 
 @testset "Random Sequence test" begin
     for idx = 1:10
-        learnt_model    = DG{Int64}(5);
+        learnt_model    = DG{Int}(5);
         @test @test_nothrow for i = 1:1000
-            symbol = trunc(Int64,10*rand());
+            symbol = trunc(Int,10*rand());
             add!( learnt_model, symbol );
             predict( learnt_model );
         end

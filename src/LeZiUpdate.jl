@@ -4,7 +4,7 @@
     LeZiUpdate{SymbolType}()
 
 Creates a LeZiUpdate predictor for `SymbolType`. `SymbolType` can be any valid type including
-`Char`, `Int64` etc.,
+`Char`, `Int` etc.,
 
 ## Examples
 ```julia-repl
@@ -12,9 +12,9 @@ julia> p = LeZiUpdate{Char}()
 DiscretePredictors.LeZiUpdate{Char}(Array{Char,1}[], [*] (0)
 , Char[], Char[])
 
-julia> p = LeZiUpdate{Int64}()
-DiscretePredictors.LeZiUpdate{Int64}(Array{Int64,1}[], [*] (0)
-, Int64[], Int64[])
+julia> p = LeZiUpdate{Int}()
+DiscretePredictors.LeZiUpdate{Int}(Array{Int,1}[], [*] (0)
+, Int[], Int[])
 
 julia> p = LeZiUpdate{String}()
 DiscretePredictors.LeZiUpdate{String}(Array{String,1}[], [*] (0)
@@ -26,12 +26,12 @@ Bhattacharya, Amiya, and Sajal K. Das. "LeZi-update: An information-theoretic fr
 """
 mutable struct LeZiUpdate{T} <: BasePredictor{T}
     dictionary::Vector{Vector{T}}
-    model::Trie{T,Int64}
+    model::Trie{T,Int}
     phrase::Vector{T}
     context::Vector{T}
 
-    LeZiUpdate{T}() where {T} = new( Vector{Vector{}}(), Trie{T,Int64}(), Vector{T}(), Vector{T}() )
-    # (::Type{LeZiUpdate{T}}){T}() = new{T}( Vector{Vector{}}(), Trie{T,Int64}(), Vector{T}(), Vector{T}() );
+    LeZiUpdate{T}() where {T} = new( Vector{Vector{}}(), Trie{T,Int}(), Vector{T}(), Vector{T}() )
+    # (::Type{LeZiUpdate{T}}){T}() = new{T}( Vector{Vector{}}(), Trie{T,Int}(), Vector{T}(), Vector{T}() );
 end
 
 function add!( p::LeZiUpdate{T}, sym::T ) where {T}

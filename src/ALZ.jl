@@ -3,7 +3,7 @@
     ALZ{SymbolType}()
 
 Creates an Active LeZi predictor for `SymbolType`. `SymbolType` can be any valid type including
-`Char`, `Int64` etc.,
+`Char`, `Int` etc.,
         
 ## Examples
 ```julia-repl
@@ -11,9 +11,9 @@ julia> p = ALZ{Char}()
 DiscretePredictors.ALZ{Char}(Array{Char,1}[], [*] (0)
 , Char[], Char[], 0)
 
-julia> p = ALZ{Int64}()
-DiscretePredictors.ALZ{Int64}(Array{Int64,1}[], [*] (0)
-, Int64[], Int64[], 0)
+julia> p = ALZ{Int}()
+DiscretePredictors.ALZ{Int}(Array{Int,1}[], [*] (0)
+, Int[], Int[], 0)
 ```
 
 Reference:
@@ -21,14 +21,14 @@ Gopalratnam, Karthik, and Diane J. Cook. "Online sequential prediction via incre
 """
 mutable struct ALZ{T} <: BasePredictor{T}
     dictionary::Vector{Vector{T}}
-    model::Trie{T,Int64}
+    model::Trie{T,Int}
     phrase::Vector{T}
     window::Vector{T}
-    max_lz_length::Int64
+    max_lz_length::Int
 
     # Constructor
-    ALZ{T}() where {T} = new{T}( Vector{Vector{T}}(), Trie{T,Int64}(), Vector{T}(), Vector{T}(), 0 )
-    # (::Type{ALZ{T}}){T}() = new{T}( Vector{Vector{T}}(), Trie{T,Int64}(), Vector{T}(), Vector{T}(), 0 )
+    ALZ{T}() where {T} = new{T}( Vector{Vector{T}}(), Trie{T,Int}(), Vector{T}(), Vector{T}(), 0 )
+    # (::Type{ALZ{T}}){T}() = new{T}( Vector{Vector{T}}(), Trie{T,Int}(), Vector{T}(), Vector{T}(), 0 )
 end
 
 function add!( p::ALZ{T}, sym::T ) where {T}

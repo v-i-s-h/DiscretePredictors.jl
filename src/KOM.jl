@@ -1,10 +1,10 @@
 # Kth Order Markov Model
 
 """
-    KOM{SymbolType}(context_length::Int64)
+    KOM{SymbolType}(context_length::Int)
 
 Creates a K-th Order Markov Model predictor with a context depth of `context_length` for 
-`SymbolType`. `SymbolType` can be any valid type including `Char`, `Int64` etc.,
+`SymbolType`. `SymbolType` can be any valid type including `Char`, `Int` etc.,
 
 ## Examples
 ```julia-repl
@@ -12,9 +12,9 @@ julia> p = KOM{Char}(3)
 DiscretePredictors.KOM{Char}([*] (0)
 , Char[], 3)
 
-julia> p = KOM{Int64}(5)
-DiscretePredictors.KOM{Int64}([*] (0)
-, Int64[], 5)
+julia> p = KOM{Int}(5)
+DiscretePredictors.KOM{Int}([*] (0)
+, Int[], 5)
 
 julia> p = KOM{String}(4)
 DiscretePredictors.KOM{String}([*] (0)
@@ -25,12 +25,12 @@ Reference:
 
 """
 mutable struct KOM{T} <: BasePredictor{T}
-    model::Trie{T,Int64}
+    model::Trie{T,Int}
     context::Vector{T}
-    cxt_length::Int64
+    cxt_length::Int
 
-    KOM{T}( _c::Int ) where {T} = new( Trie{T,Int64}(), Vector{T}(), _c )
-    # (::Type{KOM{T}}){T}(_c::Int64) = new{T}( Trie{T,Int64}(), Vector{T}(), _c )
+    KOM{T}( _c::Int ) where {T} = new( Trie{T,Int}(), Vector{T}(), _c )
+    # (::Type{KOM{T}}){T}(_c::Int) = new{T}( Trie{T,Int}(), Vector{T}(), _c )
 end
 
 function add!( p::KOM{T}, sym::T ) where {T}

@@ -7,27 +7,27 @@ Creates an Error Weighted PPM predictor with context length `c` and weighing par
 
 ## Examples
 ```julia-repl
-julia> p = ewPPM{Int64}(3)
-DiscretePredictors.ewPPM{Int64}([*] (0)
-, Int64[], 3, 1.0, [1.0, 1.0, 1.0, 1.0], Dict{Int64,Float64}[Dict{Int64,Float64}(), Dict{Int64,Float64}(), Dict{Int64,Float64}(), Dict{Int64,Float64}()])
+julia> p = ewPPM{Int}(3)
+DiscretePredictors.ewPPM{Int}([*] (0)
+, Int[], 3, 1.0, [1.0, 1.0, 1.0, 1.0], Dict{Int,Float64}[Dict{Int,Float64}(), Dict{Int,Float64}(), Dict{Int,Float64}(), Dict{Int,Float64}()])
 
-julia> p = ewPPM{Int64}(3, 0.95)
-DiscretePredictors.ewPPM{Int64}([*] (0)
-, Int64[], 3, 0.95, [1.0, 1.0, 1.0, 1.0], Dict{Int64,Float64}[Dict{Int64,Float64}(), Dict{Int64,Float64}(), Dict{Int64,Float64}(), Dict{Int64,Float64}()])
+julia> p = ewPPM{Int}(3, 0.95)
+DiscretePredictors.ewPPM{Int}([*] (0)
+, Int[], 3, 0.95, [1.0, 1.0, 1.0, 1.0], Dict{Int,Float64}[Dict{Int,Float64}(), Dict{Int,Float64}(), Dict{Int,Float64}(), Dict{Int,Float64}()])
 ```
 
 Reference:
 Pulliyakode, Saishankar Katri, and Sheetal Kalyani. "A modified ppm algorithm for online sequence prediction using short data records." IEEE Communications Letters 19.3 (2015): 423-426.
 """
 mutable struct ewPPM{T} <: BasePredictor{T}
-    model::Trie{T,Int64}
+    model::Trie{T,Int}
     context::Vector{T}
-    cxt_length::Int64
+    cxt_length::Int
     ϵ::Float64
     weights::Vector{Float64}
     last_prediction::Vector{Dict{T,Float64}}
 
-    ewPPM{T}( _c::Int, _ϵ::Float64 = 1.0 ) where {T} = new( Trie{T,Int64}(), Vector{T}(),
+    ewPPM{T}( _c::Int, _ϵ::Float64 = 1.0 ) where {T} = new( Trie{T,Int}(), Vector{T}(),
                                                 _c, _ϵ,
                                                 ones(Float64,_c+1), fill(Dict{T,Float64}(),_c+1) )
 end
@@ -104,7 +104,7 @@ function info_string( p::ewPPM{T} ) where {T}
 end
 
 function unique_string( p::ewPPM{T} ) where {T}
-    return @sprintf( "ewPPM_%02d_%03d", p.cxt_length, trunc(Int64,100*p.ϵ)  )
+    return @sprintf( "ewPPM_%02d_%03d", p.cxt_length, trunc(Int,100*p.ϵ)  )
 end
 
 function predict_from_subcontext( p::ewPPM{T}, sub_cxt::Vector{T} ) where {T}

@@ -24,7 +24,7 @@ end
 
 
 # Test model
-test_model = Dict{Vector{Char},Int64}(
+test_model = Dict{Vector{Char},Int}(
     ['a'] => 10,
     ['a','a'] => 5,
     ['a','a','a'] => 2,
@@ -88,7 +88,7 @@ end
     # Reusing p
     @test get_best_symbol( p ) == 'a'
     # For untrained model
-    @test get_best_symbol( ALZ{Int64}() ) == nothing
+    @test get_best_symbol( ALZ{Int}() ) == nothing
     @test get_best_symbol( ALZ{Char}() ) == nothing
     @test get_best_symbol( ALZ{String}() ) == nothing
 end
@@ -100,9 +100,9 @@ end
 
 @testset "Random Sequence test" begin
     for idx = 1:10
-        learnt_model    = ALZ{Int64}();
+        learnt_model    = ALZ{Int}();
         @test @test_nothrow for i = 1:1000
-            symbol = trunc(Int64,10*rand());
+            symbol = trunc(Int,10*rand());
             add!( learnt_model, symbol );
             predict( learnt_model );
         end

@@ -1,10 +1,10 @@
 # Adaptive MPP: 
 """
-    AdaptiveMPP{SymbolType}(context_length::Int64 [,α::Float64 ])
+    AdaptiveMPP{SymbolType}(context_length::Int [,α::Float64 ])
 
 Creates an Adaptive MPP predictor with a context depth of `context_length` and mixing coefficient
 ``α`` for `SymbolType`. Default value of mixing parameter ``α = 0.10``. `SymbolType` can be 
-any valid type including `Char`, `Int64` etc.,
+any valid type including `Char`, `Int` etc.,
 
 ## Examples
 ```julia-repl
@@ -21,16 +21,16 @@ Reference:
 V’yugin, Vladimir V. "Online Aggregation of Unbounded Signed Losses Using Shifting Experts." Conformal and Probabilistic Prediction and Applications. 2017.
 """
 mutable struct AdaptiveMPP{T} <: BasePredictor{T}
-    model::Trie{T,Int64}
+    model::Trie{T,Int}
     context::Vector{T}
-    cxt_length::Int64
+    cxt_length::Int
     α::Float64
     η::Float64
     Δ::Float64
     weights::Vector{Float64}
     last_prediction::Vector{Dict{T,Float64}}
 
-    AdaptiveMPP{T}( _c::Int, _α = 0.10 ) where {T} = new( Trie{T,Int64}(), Vector{T}(),
+    AdaptiveMPP{T}( _c::Int, _α = 0.10 ) where {T} = new( Trie{T,Int}(), Vector{T}(),
                                                 _c, _α, +Inf, 0.00,
                                                 1/(1+_c)*ones(Float64,_c+1), fill(Dict{T,Float64}(),_c+1) )
 end
@@ -125,7 +125,7 @@ function info_string( p::AdaptiveMPP{T} ) where {T}
 end
 
 function unique_string( p::AdaptiveMPP{T} ) where {T}
-    return @sprintf( "adaptiveMPP_%02d_%03d", p.cxt_length, trunc(Int64,100*p.α) )
+    return @sprintf( "adaptiveMPP_%02d_%03d", p.cxt_length, trunc(Int,100*p.α) )
 end
 
 function predict_from_subcontext( p::AdaptiveMPP{T}, sub_cxt::Vector{T} ) where {T}

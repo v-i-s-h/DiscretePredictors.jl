@@ -31,16 +31,16 @@ search: predict BasePredictor DiscretePredictors permutedims permutedims! mapred
      Examples
     ==========
 
-  julia> p = LZ78{Int64}()
-  DiscretePredictors.LZ78{Int64}([*] (0)
-  , Int64[], Int64[])
+  julia> p = LZ78{Int}()
+  DiscretePredictors.LZ78{Int}([*] (0)
+  , Int[], Int[])
   
   julia> add!( p, 2 )
   
   julia> add!( p, 3 )
   
   julia> predict( p )
-  Dict{Int64,Float64} with 2 entries:
+  Dict{Int,Float64} with 2 entries:
     2 => 0.5
     3 => 0.5
 ```

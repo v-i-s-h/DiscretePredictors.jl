@@ -4,13 +4,13 @@
     LZ78{SymbolType}()
 
 Creates a LZ78 predictor for `SymbolType`. `SymbolType` can be any valid type including
-`Char`, `Int64` etc.,
+`Char`, `Int` etc.,
 
 ## Examples
 ```julia-repl
-julia> p = LZ78{Int64}()
-DiscretePredictors.LZ78{Int64}([*] (0)
-, Int64[], Int64[])
+julia> p = LZ78{Int}()
+DiscretePredictors.LZ78{Int}([*] (0)
+, Int[], Int[])
 
 julia> p = LZ78{Char}()
 DiscretePredictors.LZ78{Char}([*] (0)
@@ -25,13 +25,13 @@ Reference:
 Ziv, Jacob, and Abraham Lempel. "Compression of individual sequences via variable-rate coding." IEEE transactions on Information Theory 24.5 (1978): 530-536.
 """
 mutable struct LZ78{T} <: BasePredictor{T}
-    model::Trie{T,Int64}
+    model::Trie{T,Int}
     phrase::Vector{T}
     context::Vector{T}
 
     # Constructor
-    LZ78{T}() where {T} = new( Trie{T,Int64}(), Vector{T}(), Vector{T}() )
-    # (::Type{LZ78{T}}){T}() = new{T}( Trie{T,Int64}(), Vector{T}(), Vector{T}() );
+    LZ78{T}() where {T} = new( Trie{T,Int}(), Vector{T}(), Vector{T}() )
+    # (::Type{LZ78{T}}){T}() = new{T}( Trie{T,Int}(), Vector{T}(), Vector{T}() );
 end
 
 function add!( p::LZ78{T}, sym::T ) where {T}
