@@ -15,6 +15,13 @@ the package are:
 [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://v-i-s-h.github.io/DiscretePredictors.jl/stable)
 [![](https://img.shields.io/badge/docs-latest-blue.svg)](https://v-i-s-h.github.io/DiscretePredictors.jl/latest)
 
+**Installation**
+For Julia 1.0+
+```
+] add DiscretePredictors
+```
+Development of this package now targets only Julia 1.+. A release for Julia 0.6.x/0.7.0 can be downloaded from [here](https://github.com/v-i-s-h/DiscretePredictors.jl/releases/tag/v0.1.0).
+
 ### API Overview:
 - `p = Predictor{SymbolType}(parameters...)` creates a predictor instance `p` with 
     prediction algorithm `Predictor` (see choices below) of symbols of `SymbolType` with 
@@ -78,6 +85,13 @@ julia> unique_string( p )
 julia> size( p )
 10
 ```
+
+### Contribute
+You can contribute to this project in multiple ways:
+
+1. Found a bug? Please file an issue.
+2. Want to see a new predictor implemented? Please file an issue with relevant references. We will make our best effort to implement it.
+3. Implemented a new algorithm? Great! Go ahead and open a PR.
 
 ### Acknowledgements
 This package uses a [modified version](./src/Trie.jl) of ```trie``` from 
