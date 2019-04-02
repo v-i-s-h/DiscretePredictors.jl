@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Home · DiscretePredictors.jl</title><link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css" rel="stylesheet" type="text/css"/><link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Mono" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.min.js" data-main="assets/documenter.js"></script><script src="siteinfo.js"></script><script src="../versions.js"></script><link href="assets/documenter.css" rel="stylesheet" type="text/css"/></head><body><nav class="toc"><h1>DiscretePredictors.jl</h1><select id="version-selector" onChange="window.location.href=this.value" style="visibility: hidden"></select><form class="search" id="search-form" action="search/"><input id="search-query" name="q" type="text" placeholder="Search docs"/></form><ul><li class="current"><a class="toctext" href>Home</a><ul class="internal"><li><a class="toctext" href="#Setting-up-DiscretePredictors.jl-1">Setting up DiscretePredictors.jl</a></li><li><a class="toctext" href="#Library-Outline-1">Library Outline</a></li><li><a class="toctext" href="#Brief-Overview-1">Brief Overview</a></li></ul></li><li><span class="toctext">Manual</span><ul><li><a class="toctext" href="man/guide/">Guide</a></li><li><a class="toctext" href="man/examples/">Examples</a></li></ul></li><li><span class="toctext">Library</span><ul><li><a class="toctext" href="lib/interface/">High Level Interface</a></li><li><a class="toctext" href="lib/predictors/">Predictors</a></li></ul></li></ul></nav><article id="docs"><header><nav><ul><li><a href>Home</a></li></ul><a class="edit-page" href="https://github.com/v-i-s-h/DiscretePredictors.jl/blob/master/docs/src/index.md"><span class="fa"></span> Edit on GitHub</a></nav><hr/><div id="topbar"><span>Home</span><a class="fa fa-bars" href="#"></a></div></header><h1><a class="nav-anchor" id="DiscretePredictors.jl-1" href="#DiscretePredictors.jl-1">DiscretePredictors.jl</a></h1><p><em>A Julia package for online discrete symbol prediction</em></p><h2><a class="nav-anchor" id="Setting-up-DiscretePredictors.jl-1" href="#Setting-up-DiscretePredictors.jl-1">Setting up DiscretePredictors.jl</a></h2><ul><li><a href="man/guide/#Package-Guide-1">Package Guide</a></li><ul><li><a href="man/guide/#Installation-1">Installation</a></li><li><a href="man/guide/#Usage-1">Usage</a></li><li><a href="man/guide/#Accessing-Documentation-from-REPL-1">Accessing Documentation from REPL</a></li></ul></ul><h2><a class="nav-anchor" id="Library-Outline-1" href="#Library-Outline-1">Library Outline</a></h2><ul><li><a href="lib/interface/#High-Level-Interface-1">High Level Interface</a></li><ul><li><a href="lib/interface/#add!-1">add!</a></li><li><a href="lib/interface/#predict-1">predict</a></li><li><a href="lib/interface/#info_string-1">info_string</a></li><li><a href="lib/interface/#unique_string-1">unique_string</a></li><li><a href="lib/interface/#get*best*symbol-1">get<em>best</em>symbol</a></li><li><a href="lib/interface/#size-1">size</a></li></ul><li><a href="lib/predictors/#Predictors-1">Predictors</a></li><ul><li><a href="lib/predictors/#Adaptive-MPP-1">Adaptive MPP</a></li><li><a href="lib/predictors/#Active-LeZi-1">Active LeZi</a></li><li><a href="lib/predictors/#Dependency-Graph-1">Dependency Graph</a></li><li><a href="lib/predictors/#Discounted-HEDGE-with-PPM-1">Discounted HEDGE with PPM</a></li><li><a href="lib/predictors/#Error-Weighted-PPM-1">Error Weighted PPM</a></li><li><a href="lib/predictors/#K-th-Order-Markov-Model-1">K-th Order Markov Model</a></li><li><a href="lib/predictors/#LeZi-Update-1">LeZi Update</a></li><li><a href="lib/predictors/#LZ78-1">LZ78</a></li></ul></ul><h2><a class="nav-anchor" id="Brief-Overview-1" href="#Brief-Overview-1">Brief Overview</a></h2><section class="docstring"><div class="docstring-header"><a class="docstring-binding" id="DiscretePredictors.DiscretePredictors" href="#DiscretePredictors.DiscretePredictors"><code>DiscretePredictors.DiscretePredictors</code></a> — <span class="docstring-category">Module</span>.</div><div><div><p>A Julia package for online discrete sequence prediction.</p><p>API Overview:</p><ul><li><code>p = Predictor{SymbolType}(parameters...)</code> creates a predictor instance <code>p</code> with    prediction algorithm <code>Predictor</code> (see choices below) of symbols of <code>SymbolType</code> with    specified the <code>parameters</code></li><li><code>add!( p, sym )</code> adds a symbol to the model</li><li><code>predict( p )</code> computes a probability distribution over the symbols seen so far by the    model and returns it as dictionary of <code>Dict{SymbolType,Float64}</code></li><li><code>info_string( p )</code> returns a human readable string about the predictor <code>p</code></li><li><code>unique_string( p )</code> returns a unique string for the predictor <code>p</code> with paramter configuration</li><li><code>get_best_symbol( p )</code>  returns the symbol of type <code>SymbolType</code> with highest probability    under current context</li><li><code>size( p )</code> returns the number of nodes in current prediction model <code>p.model</code></li></ul><p>Available Predictors:</p><ul><li>Adaptive MPP (<a href="lib/predictors/#DiscretePredictors.AdaptiveMPP"><code>AdaptiveMPP</code></a>)</li><li>Active LeZi (<a href="lib/predictors/#DiscretePredictors.ALZ"><code>ALZ</code></a>)</li><li>Dependency Graph (<a href="lib/predictors/#DiscretePredictors.DG"><code>DG</code></a>)</li><li>Discounted HEDGE on KOM (<a href="lib/predictors/#DiscretePredictors.dHedgePPM"><code>dHedgePPM</code></a>)</li><li>Error Weighted PPM (<a href="lib/predictors/#DiscretePredictors.ewPPM"><code>ewPPM</code></a>)</li><li>K-th Order Markov Model (<a href="lib/predictors/#DiscretePredictors.KOM"><code>KOM</code></a>)</li><li>LeZi-Update (<a href="lib/predictors/#DiscretePredictors.LeZiUpdate"><code>LeZiUpdate</code></a>)</li><li>LeZi78 (<a href="lib/predictors/#DiscretePredictors.LZ78"><code>LZ78</code></a>)</li></ul><p><strong>Example</strong></p><pre><code class="language-julia"># Initialize a predictor
+julia&gt; p = KOM{Char}(4)
+DiscretePredictors.KOM{Char}([*] (0)
+, Char[], 4)
+
+# Add some symbols
+julia&gt; add!( p, &#39;a&#39; )
+
+julia&gt; add!( p, &#39;b&#39; )
+
+julia&gt; add!( p, &#39;c&#39; )
+
+julia&gt; add!( p, &#39;b&#39; )
+
+# Print out the model
+julia&gt; p
+DiscretePredictors.KOM{Char}([*] (4)
++---[b] (2)
+     +---[c] (1)
+          +---[b] (1)
++---[a] (1)
+     +---[b] (1)
+          +---[c] (1)
+               +---[b] (1)
++---[c] (1)
+     +---[b] (1)
+, [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;b&#39;], 4)
+
+# Get prediction
+julia&gt; predict( p )
+Dict{Char,Float64} with 3 entries:
+  &#39;b&#39; =&gt; 0.25
+  &#39;a&#39; =&gt; 0.125
+  &#39;c&#39; =&gt; 0.625
+
+# Get best symbol
+julia&gt; get_best_symbol( p )
+&#39;c&#39;: ASCII/Unicode U+0063 (category Ll: Letter, lowercase)
+
+julia&gt; info_string( p )
+&quot;KOM(4)&quot;
+
+julia&gt; unique_string( p )
+&quot;KOM_04&quot;
+
+julia&gt; size( p )
+10
+</code></pre></div></div><a class="source-link" target="_blank" href="https://github.com/v-i-s-h/DiscretePredictors.jl/blob/72eb2c00283bf64ffa21b5689ff47e71e7ebc9e8/src/DiscretePredictors.jl#L39-L116">source</a></section><footer><hr/><a class="next" href="man/guide/"><span class="direction">Next</span><span class="title">Guide</span></a></footer></article></body></html>
