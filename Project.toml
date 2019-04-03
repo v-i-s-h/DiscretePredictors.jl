@@ -3,7 +3,7 @@ uuid = "a1b8beaa-0f25-52fa-b34f-c7db7ae101e8"
 keywords = ["prediction"]
 license = "MIT"
 desc = "A collection of discrete symbol predictors"
-version = "0.1.1"
+version = "1.0.0"
 
 [deps]
 Printf = "de0858da-6303-5e67-8744-51eddeeeb8d7"
