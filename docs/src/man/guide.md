@@ -18,7 +18,7 @@ using DiscretePredictors
 
 ## Accessing Documentation from REPL
 All docs found here can also be accessed via REPL through Julia's help functionality.
-```juli-repl
+```julia-repl
 julia> using DiscretePredictors
 
 help?> predict
@@ -26,7 +26,7 @@ search: predict BasePredictor DiscretePredictors permutedims permutedims! mapred
 
   predict( p::Predictor{SymbolType} )
 
-  Returns a disctionary of Dict{SymbolType,Float64} with probabilities of next symbol.
+  Returns a dictionary of Dict{SymbolType,Float64} with probabilities of next symbol.
 
      Examples
     ==========

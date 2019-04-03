@@ -9,8 +9,7 @@ the package are:
 
 **Build Status** 
 [![Build Status](https://travis-ci.org/v-i-s-h/DiscretePredictors.jl.svg?branch=master)](https://travis-ci.org/v-i-s-h/DiscretePredictors.jl)
-[![Build status](https://ci.appveyor.com/api/projects/status/github/v-i-s-h/discretepredictors-jl?branch=master&svg=true)](https://ci.appveyor.com/project/v-i-s-h/discretepredictors-jl)
-
+[![Build status](https://ci.appveyor.com/api/projects/status/aace65lkov206h5a?svg=true)](https://ci.appveyor.com/project/v-i-s-h/discretepredictors-jl)
 **Documentation**
 [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://v-i-s-h.github.io/DiscretePredictors.jl/stable)
 [![](https://img.shields.io/badge/docs-latest-blue.svg)](https://v-i-s-h.github.io/DiscretePredictors.jl/latest)
@@ -30,7 +29,7 @@ Development of this package now targets only Julia 1.+. A release for Julia 0.6.
 - `predict( p )` computes a probability distribution over the symbols seen so far by the 
     model and returns it as dictionary of `Dict{SymbolType,Float64}`
 - `info_string( p )` returns a human readable string about the predictor `p`
-- `unique_string( p )` returns a unique string for the predictor `p` with paramter configuration
+- `unique_string( p )` returns a unique string for the predictor `p` with parameter configuration
 - `get_best_symbol( p )`  returns the symbol of type `SymbolType` with highest probability 
     under current context
 - `size( p )` returns the number of nodes in current prediction model `p.model`

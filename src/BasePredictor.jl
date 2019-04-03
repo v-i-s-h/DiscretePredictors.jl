@@ -25,7 +25,7 @@ end
 """
     predict( p::Predictor{SymbolType} )
 
-Returns a disctionary of Dict{SymbolType,Float64} with probabilities of next symbol.
+Returns a dictionary of Dict{SymbolType,Float64} with probabilities of next symbol.
 
 ## Examples
 ```julia-repl
